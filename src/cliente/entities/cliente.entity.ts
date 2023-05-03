@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -17,8 +19,8 @@ export class Cliente {
   })
   dni_cuit: string;
 
-  @Column('integer')
-  categoria_id: number;
+  @Column('text')
+  categoria: string;
 
   @Column('text', {
     nullable: true,
@@ -89,4 +91,14 @@ export class Cliente {
 
   @DeleteDateColumn()
   fecha_baja: Date;
+
+  @BeforeInsert()
+  checkCategoriaInsert(): void {
+    this.categoria.toLowerCase();
+  }
+
+  @BeforeUpdate()
+  checkCategoriaUpdate(): void {
+    this.categoria.toLowerCase();
+  }
 }

@@ -1,4 +1,5 @@
 import {
+  IsIn,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -13,12 +14,15 @@ export class CreateClienteDto {
   @MinLength(7, { message: 'el dni o cuil debe ser válido' })
   dni_cuit: string;
 
-  @IsNumber()
-  categoria_id: number;
+  @IsString()
+  @IsIn(['juridico', 'fisico'], {
+    message: "La categoría del Usuario solo puede ser: 'juridico' o 'fisico'",
+  })
+  categoria: string;
 
   @IsString()
   @IsOptional()
-  @MinLength(5, { message: 'la razo social debe ser un texto válido' })
+  @MinLength(5, { message: 'la razom social debe ser un texto válido' })
   razon_social?: string;
 
   @IsString()

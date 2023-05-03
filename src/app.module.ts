@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClienteModule } from './cliente/cliente.module';
 import { ContraparteModule } from './contraparte/contraparte.module';
 import { CommonModule } from './common/common.module';
+import { ProvinciasModule } from './provincias/provincias.module';
+import { LocalidadesModule } from './localidades/localidades.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { CommonModule } from './common/common.module';
     ClienteModule,
     ContraparteModule,
     CommonModule,
+    ProvinciasModule,
+    LocalidadesModule,
   ],
   controllers: [],
   providers: [],

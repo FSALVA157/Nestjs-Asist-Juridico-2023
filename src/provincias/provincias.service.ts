@@ -4,25 +4,26 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateClienteDto } from './dto/create-cliente.dto';
-import { UpdateClienteDto } from './dto/update-cliente.dto';
+import { CreateProvinciaDto } from './dto/create-provincia.dto';
+import { UpdateProvinciaDto } from './dto/update-provincia.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Cliente } from './entities/cliente.entity';
+import { Provincia } from './entities/provincia.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Injectable()
-export class ClienteService {
+export class ProvinciasService {
   constructor(
-    @InjectRepository(Cliente)
-    private readonly clienteRepository: Repository<Cliente>,
+    @InjectRepository(Provincia)
+    private readonly provinciaRepository: Repository<Provincia>,
   ) {}
 
-  async create(createClienteDto: CreateClienteDto) {
+  async create(createProvinciaDto: CreateProvinciaDto) {
     try {
-      const nuevoCliente = this.clienteRepository.create(createClienteDto);
-      await this.clienteRepository.save(nuevoCliente);
-      return nuevoCliente;
+      const nuevaProvincia =
+        this.provinciaRepository.create(createProvinciaDto);
+      await this.provinciaRepository.save(nuevaProvincia);
+      return nuevaProvincia;
     } catch (error) {
       this.handleDBExceptions(error);
     }
@@ -31,7 +32,7 @@ export class ClienteService {
   async findAll(paginationDto: PaginationDto) {
     try {
       const { limit = 0, offset = 0 } = paginationDto;
-      return await this.clienteRepository.findAndCount({
+      return await this.provinciaRepository.findAndCount({
         take: limit,
         skip: offset,
       });
@@ -42,23 +43,23 @@ export class ClienteService {
 
   async findOne(id: number) {
     try {
-      return await this.clienteRepository.findOneOrFail({
-        where: { id_cliente: id },
+      return await this.provinciaRepository.findOneOrFail({
+        where: { id_provincia: id },
       });
     } catch (error) {
       throw new NotFoundException(error.message);
     }
   }
 
-  async update(id: number, updateClienteDto: UpdateClienteDto) {
+  async update(id: number, updateProvinciaDto: UpdateProvinciaDto) {
     try {
-      const res = await this.clienteRepository.update(
-        { id_cliente: id },
-        updateClienteDto,
+      const res = await this.provinciaRepository.update(
+        { id_provincia: id },
+        updateProvinciaDto,
       );
       if (res.affected == 0)
         throw new NotFoundException(
-          'Error No se Actualizo ningún Registro Cliente',
+          'Error No se Actualizo ningún Registro Provincia',
         );
       return res;
     } catch (error) {
@@ -68,8 +69,11 @@ export class ClienteService {
 
   async remove(id: number) {
     try {
-      const res = await this.clienteRepository.softDelete({ id_cliente: id });
+      const res = await this.provinciaRepository.delete({
+        id_provincia: id,
+      });
       if (res.affected == 0) throw new Error('No existe el registro a borrar');
+      return res;
     } catch (error) {
       throw new NotFoundException(error.message);
       //this.handleDBExceptions(error);
