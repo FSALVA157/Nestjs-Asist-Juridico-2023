@@ -6,6 +6,8 @@ import { ContraparteModule } from './contraparte/contraparte.module';
 import { CommonModule } from './common/common.module';
 import { ProvinciasModule } from './provincias/provincias.module';
 import { LocalidadesModule } from './localidades/localidades.module';
+import { CasosModule } from './casos/casos.module';
+import { MovimientoCasoModule } from './movimiento-caso/movimiento-caso.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { LocalidadesModule } from './localidades/localidades.module';
     CommonModule,
     ProvinciasModule,
     LocalidadesModule,
+    CasosModule,
+    MovimientoCasoModule,
   ],
   controllers: [],
   providers: [],
