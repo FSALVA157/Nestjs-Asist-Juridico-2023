@@ -4,27 +4,28 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCasoDto } from './dto/create-caso.dto';
-import { UpdateCasoDto } from './dto/update-caso.dto';
+import { CreateJurisdiccionDto } from './dto/create-jurisdiccion.dto';
+import { UpdateJurisdiccionDto } from './dto/update-jurisdiccion.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Caso } from './entities/caso.entity';
+import { Jurisdiccion } from './entities/jurisdiccion.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { handleDBExceptions } from '../common/filters/handle-exceptions';
-import { Jurisdiccion } from '../jurisdiccion/entities/jurisdiccion.entity';
 
 @Injectable()
-export class CasosService {
+export class JurisdiccionService {
   constructor(
-    @InjectRepository(Caso)
-    private readonly casoRepository: Repository<Caso>,
+    @InjectRepository(Jurisdiccion)
+    private readonly jurisdiccionRepository: Repository<Jurisdiccion>,
   ) {}
 
-  async create(createCasoDto: CreateCasoDto) {
+  async create(createJurisdiccionDto: CreateJurisdiccionDto) {
     try {
-      const nuevoCaso = this.casoRepository.create(createCasoDto);
-      await this.casoRepository.save(nuevoCaso);
-      return nuevoCaso;
+      const nuevaJurisdiccion = this.jurisdiccionRepository.create(
+        createJurisdiccionDto,
+      );
+      await this.jurisdiccionRepository.save(nuevaJurisdiccion);
+      return nuevaJurisdiccion;
     } catch (error) {
       handleDBExceptions(error);
     }
@@ -33,15 +34,10 @@ export class CasosService {
   async findAll(paginationDto: PaginationDto) {
     try {
       const { limit = 0, offset = 0 } = paginationDto;
-      const res = await this.casoRepository.findAndCount({
+      return await this.jurisdiccionRepository.findAndCount({
         take: limit,
         skip: offset,
       });
-      const resf = res[0].map((caso) => ({
-        ...caso,
-        jurisdiccion: caso.jurisdiccion.jurisdiccion,
-      }));
-      return resf;
     } catch (error) {
       handleDBExceptions(error);
     }
@@ -49,37 +45,40 @@ export class CasosService {
 
   async findOne(id: number) {
     try {
-      return await this.casoRepository.findOneOrFail({
-        where: { id_caso: id },
+      return await this.jurisdiccionRepository.findOneOrFail({
+        where: { id_jurisdiccion: id },
       });
     } catch (error) {
       throw new NotFoundException(error.message);
     }
   }
 
-  async update(id: number, updateCasoDto: UpdateCasoDto) {
+  async update(id: number, updateJurisdiccionDto: UpdateJurisdiccionDto) {
     try {
-      const res = await this.casoRepository.update(
-        { id_caso: id },
-        updateCasoDto,
+      const res = await this.jurisdiccionRepository.update(
+        { id_jurisdiccion: id },
+        updateJurisdiccionDto,
       );
       if (res.affected == 0)
         throw new NotFoundException(
-          'Error No se Actualizo ningún Registro Caso',
+          'Error No se Actualizo ningún Registro Jurisdiccion',
         );
       return res;
     } catch (error) {
       handleDBExceptions(error);
+      //  this.handleDBExceptions(error);
     }
   }
 
   async remove(id: number) {
     try {
-      const res = await this.casoRepository.softDelete({ id_caso: id });
+      const res = await this.jurisdiccionRepository.softDelete({
+        id_jurisdiccion: id,
+      });
       if (res.affected == 0) throw new Error('No existe el registro a borrar');
       return {
         ...res,
-        message: `El Registro ${id} ha sido eliminado exitosamente`,
+        message: `El Registro ${id} ha sido borrado`,
       };
     } catch (error) {
       throw new NotFoundException(error.message);
@@ -88,8 +87,8 @@ export class CasosService {
   }
 
   // private handleDBExceptions(error: any) {
-  //   if (error.response.statusCode === 404)
-  //     throw new NotFoundException(error.message);
+  //   console.error(error.code);
+  //   console.warn(error.code === '23505');
 
   //   if (error.code === 404) {
   //     throw new NotFoundException();
@@ -97,6 +96,10 @@ export class CasosService {
   //   if (error.code === '23505') {
   //     throw new BadRequestException(error.detail);
   //   }
+  //   if (error.response.statusCode === 404) {
+  //     throw new NotFoundException(error.message);
+  //   }
+
   //   throw new InternalServerErrorException('Unexpected error  check the logs');
   // }
 }

@@ -18,7 +18,7 @@ export class MovimientoCaso {
   @Column('integer')
   caso_id: number;
 
-  //relacion con tabla clientes
+  //relacion con tabla caso
   @ManyToOne(() => Caso, (type) => type.movimientos, {
     eager: true,
   })

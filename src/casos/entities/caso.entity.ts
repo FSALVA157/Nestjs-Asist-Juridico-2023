@@ -4,11 +4,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { EtapaDto } from '../dto/etapa.dto';
+import { Jurisdiccion } from 'src/jurisdiccion/entities/jurisdiccion.entity';
+import { Distrito } from 'src/distrito/entities/distrito.entity';
 
 @Entity()
 export class Caso {
@@ -27,6 +31,48 @@ export class Caso {
     default: [],
   })
   etapas: EtapaDto[];
+
+  @Column('date')
+  fecha_inicio: Date;
+
+  @Column('date', {
+    nullable: true,
+  })
+  fecha_fin: Date;
+
+  @Column('text', {
+    nullable: true,
+  })
+  detalle: string;
+
+  @Column('text', {
+    nullable: true,
+    unique: true,
+  })
+  expediente_nro: string;
+
+  @Column('int')
+  jurisdiccion_id: number;
+
+  // relacion con tabla jurisdiccion
+  @ManyToOne(() => Jurisdiccion, {
+    eager: true,
+  })
+  @JoinColumn({
+    name: 'jurisdiccion_id',
+    referencedColumnName: 'id_jurisdiccion',
+  })
+  jurisdiccion: Jurisdiccion;
+
+  @Column('int')
+  distrito_id: number;
+  // //relacion con tabla distrito
+  @ManyToOne(() => Distrito, { eager: true })
+  @JoinColumn({
+    name: 'distrito_id',
+    referencedColumnName: 'id_distrito',
+  })
+  distritos: Distrito[];
 
   // @AfterLoad()
   // misEtapas() {
@@ -68,36 +114,6 @@ export class Caso {
   //   referencedColumnName: 'id_cliente',
   // })
   // cliente: Cliente;
-
-  // @Column({ type: 'date' })
-  // @IsISO8601()
-  // @Transform(() => Date)
-  // fecha_inicio: Date;
-
-  // @Column({
-  //   type: 'varchar',
-  //   length: 500,
-  //   nullable: true,
-  // })
-  // @IsOptional()
-  // @Length(5, 500, {
-  //   message:
-  //     'El detalle debe tener entre $constraint1 y $constraint2 caracteres',
-  // })
-  // detalle: string;
-
-  // @Column({
-  //   type: 'varchar',
-  //   length: 30,
-  //   nullable: true,
-  //   unique: true,
-  // })
-  // @IsOptional()
-  // @Length(5, 30, {
-  //   message:
-  //     'El numero de expediente debe tener entre $constraint1 y $constraint2 caracteres',
-  // })
-  // expediente_nro: string;
 
   // @Column({
   //   type: 'varchar',
@@ -191,39 +207,6 @@ export class Caso {
   //     'Los datos del abogado deben tener entre $constraint1 y $constraint2 caracteres',
   // })
   // contraparte_abogado: string;
-
-  // @Column({
-  //   type: 'int',
-  //   nullable: true,
-  //   default: 1,
-  // })
-  // @IsOptional()
-  // @IsInt({ message: 'La clave jurisdiccion debe ser un entero' })
-  // jurisdiccion_id: number;
-
-  // // relacion con tabla jurisdiccion
-  // @ManyToOne((type) => Jurisdiccion, { eager: true })
-  // @JoinColumn({
-  //   name: 'jurisdiccion_id',
-  //   referencedColumnName: 'id_jurisdiccion',
-  // })
-  // jurisdiccion: Jurisdiccion;
-
-  // @Column({
-  //   type: 'int',
-  //   nullable: true,
-  // })
-  // @IsOptional()
-  // @IsInt({ message: 'El distrito debe ser un entero' })
-  // distrito_id: number;
-
-  // //relacion con tabla distrito
-  // @ManyToOne((type) => Distrito, { eager: true })
-  // @JoinColumn({
-  //   name: 'distrito_id',
-  //   referencedColumnName: 'id_distrito',
-  // })
-  // distrito: Distrito;
 
   // @Column({
   //   type: 'int',
@@ -371,15 +354,6 @@ export class Caso {
   // @IsOptional()
   // @IsDecimal()
   // monto_juicio: number;
-
-  // @Column({
-  //   type: 'date',
-  //   nullable: true,
-  // })
-  // @IsOptional()
-  // @IsISO8601()
-  // @Transform(() => Date)
-  // fecha_fin: Date;
 
   // @Column({
   //   default: true,

@@ -8,6 +8,8 @@ import { ProvinciasModule } from './provincias/provincias.module';
 import { LocalidadesModule } from './localidades/localidades.module';
 import { CasosModule } from './casos/casos.module';
 import { MovimientoCasoModule } from './movimiento-caso/movimiento-caso.module';
+import { JurisdiccionModule } from './jurisdiccion/jurisdiccion.module';
+import { DistritoModule } from './distrito/distrito.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { MovimientoCasoModule } from './movimiento-caso/movimiento-caso.module';
     LocalidadesModule,
     CasosModule,
     MovimientoCasoModule,
+    JurisdiccionModule,
+    DistritoModule,
   ],
   controllers: [],
   providers: [],

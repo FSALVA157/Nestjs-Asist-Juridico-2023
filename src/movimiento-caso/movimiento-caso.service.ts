@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MovimientoCaso } from './entities/movimiento-caso.entity';
 import { Repository } from 'typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { handleDBExceptions } from '../common/filters/handle-exceptions';
 
 @Injectable()
 export class MovimientoCasoService {
@@ -26,7 +27,7 @@ export class MovimientoCasoService {
       await this.movimientoRepository.save(nuevoMovimiento);
       return nuevoMovimiento;
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -38,7 +39,7 @@ export class MovimientoCasoService {
         skip: offset,
       });
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -64,7 +65,7 @@ export class MovimientoCasoService {
         );
       return res;
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -80,16 +81,16 @@ export class MovimientoCasoService {
     }
   }
 
-  private handleDBExceptions(error: any) {
-    if (error.response.statusCode === 404)
-      throw new NotFoundException(error.message);
+  // private handleDBExceptions(error: any) {
+  //   if (error.response.statusCode === 404)
+  //     throw new NotFoundException(error.message);
 
-    if (error.code === 404) {
-      throw new NotFoundException();
-    }
-    if (error.code === '23505') {
-      throw new BadRequestException(error.detail);
-    }
-    throw new InternalServerErrorException('Unexpected error check the logs');
-  }
+  //   if (error.code === 404) {
+  //     throw new NotFoundException();
+  //   }
+  //   if (error.code === '23505') {
+  //     throw new BadRequestException(error.detail);
+  //   }
+  //   throw new InternalServerErrorException('Unexpected error check the logs');
+  // }
 }

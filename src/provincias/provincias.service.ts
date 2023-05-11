@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Provincia } from './entities/provincia.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { handleDBExceptions } from '../common/filters/handle-exceptions';
 
 @Injectable()
 export class ProvinciasService {
@@ -25,7 +26,7 @@ export class ProvinciasService {
       await this.provinciaRepository.save(nuevaProvincia);
       return nuevaProvincia;
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -37,7 +38,7 @@ export class ProvinciasService {
         skip: offset,
       });
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -63,7 +64,7 @@ export class ProvinciasService {
         );
       return res;
     } catch (error) {
-      this.handleDBExceptions(error);
+      handleDBExceptions(error);
     }
   }
 
@@ -80,18 +81,18 @@ export class ProvinciasService {
     }
   }
 
-  private handleDBExceptions(error: any) {
-    if (error.response.statusCode === 404)
-      throw new NotFoundException(error.message);
+  // private handleDBExceptions(error: any) {
+  //   if (error.response.statusCode === 404)
+  //     throw new NotFoundException(error.message);
 
-    if (error.code === 404) {
-      throw new NotFoundException();
-    }
-    if (error.code === '23505') {
-      throw new BadRequestException(error.detail);
-    }
-    throw new InternalServerErrorException(
-      'Unexpected error creating cliente check the logs',
-    );
-  }
+  //   if (error.code === 404) {
+  //     throw new NotFoundException();
+  //   }
+  //   if (error.code === '23505') {
+  //     throw new BadRequestException(error.detail);
+  //   }
+  //   throw new InternalServerErrorException(
+  //     'Unexpected error creating cliente check the logs',
+  //   );
+  // }
 }
