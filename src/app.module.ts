@@ -10,6 +10,7 @@ import { CasosModule } from './casos/casos.module';
 import { MovimientoCasoModule } from './movimiento-caso/movimiento-caso.module';
 import { JurisdiccionModule } from './jurisdiccion/jurisdiccion.module';
 import { DistritoModule } from './distrito/distrito.module';
+import { FueroModule } from './fuero/fuero.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { DistritoModule } from './distrito/distrito.module';
     MovimientoCasoModule,
     JurisdiccionModule,
     DistritoModule,
+    FueroModule,
   ],
   controllers: [],
   providers: [],
