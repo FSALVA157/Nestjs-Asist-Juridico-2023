@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateJurisdiccionDto } from './dto/create-jurisdiccion.dto';
 import { UpdateJurisdiccionDto } from './dto/update-jurisdiccion.dto';
 import { InjectRepository } from '@nestjs/typeorm';

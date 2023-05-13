@@ -11,6 +11,7 @@ import { MovimientoCasoModule } from './movimiento-caso/movimiento-caso.module';
 import { JurisdiccionModule } from './jurisdiccion/jurisdiccion.module';
 import { DistritoModule } from './distrito/distrito.module';
 import { FueroModule } from './fuero/fuero.module';
+import { TipoProcesoModule } from './tipo-proceso/tipo-proceso.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FueroModule } from './fuero/fuero.module';
     JurisdiccionModule,
     DistritoModule,
     FueroModule,
+    TipoProcesoModule,
   ],
   controllers: [],
   providers: [],
