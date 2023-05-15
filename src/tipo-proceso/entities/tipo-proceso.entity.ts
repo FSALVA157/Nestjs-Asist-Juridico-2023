@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class TipoProceso {
@@ -9,6 +16,7 @@ export class TipoProceso {
     unique: true,
   })
   tipo_proceso: string;
+
   // @OneToMany(type => Etapa,etapa => etapa.tipo,{onDelete: "CASCADE",cascade: true})
   // etapas : Etapa[];
 
@@ -16,4 +24,13 @@ export class TipoProceso {
   //     cascade: true,
   //   })
   //   objetos: Objeto[];
+
+  @CreateDateColumn()
+  fecha_alta: Date;
+
+  @UpdateDateColumn()
+  ultima_actualizacion: Date;
+
+  @DeleteDateColumn()
+  fecha_baja: Date;
 }

@@ -12,6 +12,7 @@ import { JurisdiccionModule } from './jurisdiccion/jurisdiccion.module';
 import { DistritoModule } from './distrito/distrito.module';
 import { FueroModule } from './fuero/fuero.module';
 import { TipoProcesoModule } from './tipo-proceso/tipo-proceso.module';
+import { ObjetoModule } from './objeto/objeto.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { TipoProcesoModule } from './tipo-proceso/tipo-proceso.module';
     DistritoModule,
     FueroModule,
     TipoProcesoModule,
+    ObjetoModule,
   ],
   controllers: [],
   providers: [],
