@@ -13,6 +13,7 @@ import { DistritoModule } from './distrito/distrito.module';
 import { FueroModule } from './fuero/fuero.module';
 import { TipoProcesoModule } from './tipo-proceso/tipo-proceso.module';
 import { ObjetoModule } from './objeto/objeto.module';
+import { CaracterLetradoModule } from './caracter_letrado/caracter_letrado.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ObjetoModule } from './objeto/objeto.module';
     FueroModule,
     TipoProcesoModule,
     ObjetoModule,
+    CaracterLetradoModule,
   ],
   controllers: [],
   providers: [],
