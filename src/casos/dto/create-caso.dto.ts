@@ -35,5 +35,16 @@ export class CreateCasoDto {
 
   @IsInt({ message: 'El distrito debe ser un entero' })
   distrito_id: number;
-  // // relacion con tabla jurisdiccion
+
+  @IsInt({ message: 'El fuero debe ser un entero' })
+  fuero_id: number;
+
+  @IsInt({ message: 'El tipo de proceso es una clave entera' })
+  tipo_proceso_id: number;
+
+  @IsInt({ message: 'El objeto es una clave entera' })
+  objeto_id: number;
+
+  @IsInt({ message: 'La clave de carácter del letrado debe ser un entero' })
+  caracter_letrado_id: number;
 }

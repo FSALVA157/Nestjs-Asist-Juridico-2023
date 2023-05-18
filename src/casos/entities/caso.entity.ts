@@ -13,6 +13,10 @@ import {
 import { EtapaDto } from '../dto/etapa.dto';
 import { Jurisdiccion } from 'src/jurisdiccion/entities/jurisdiccion.entity';
 import { Distrito } from 'src/distrito/entities/distrito.entity';
+import { Fuero } from 'src/fuero/entities/fuero.entity';
+import { CaracterLetrado } from 'src/caracter_letrado/entities/caracter_letrado.entity';
+import { TipoProceso } from 'src/tipo-proceso/entities/tipo-proceso.entity';
+import { Objeto } from 'src/objeto/entities/objeto.entity';
 
 @Entity()
 export class Caso {
@@ -72,7 +76,48 @@ export class Caso {
     name: 'distrito_id',
     referencedColumnName: 'id_distrito',
   })
-  distritos: Distrito[];
+  distrito: Distrito;
+
+  @Column('int')
+  fuero_id: number;
+
+  //relacion con tabla fuero
+  @ManyToOne(() => Fuero, { eager: true })
+  @JoinColumn({
+    name: 'fuero_id',
+    referencedColumnName: 'id_fuero',
+  })
+  fuero: Fuero;
+
+  @Column('int')
+  tipo_proceso_id: number;
+
+  @Column('int')
+  objeto_id: number;
+
+  @ManyToOne(() => Objeto, { eager: true })
+  @JoinColumn({
+    name: 'objeto_id',
+    referencedColumnName: 'id_objeto',
+  })
+  objeto: Objeto;
+
+  @ManyToOne(() => TipoProceso, { eager: true })
+  @JoinColumn({
+    name: 'tipo_proceso_id',
+    referencedColumnName: 'id_tipo_proceso',
+  })
+  tipo: TipoProceso;
+
+  @Column('int')
+  caracter_letrado_id: number;
+
+  @ManyToOne(() => CaracterLetrado, { eager: true })
+  @JoinColumn({
+    name: 'caracter_letrado_id',
+    referencedColumnName: 'id_caracter_letrado',
+  })
+  caracter_letrado: CaracterLetrado;
 
   // @AfterLoad()
   // misEtapas() {
@@ -242,12 +287,6 @@ export class Caso {
   // @Column({
   //   type: 'int',
   // })
-  // @IsInt({ message: 'La clave de carácter del letrado debe ser un entero' })
-  // caracter_letrado_id: number;
-
-  // @Column({
-  //   type: 'int',
-  // })
   // @IsInt({ message: 'La clave de carácter del cliente debe ser un entero' })
   // caracter_cliente_id: number;
 
@@ -262,36 +301,6 @@ export class Caso {
   // })
   // @IsOptional()
   // mesa: string;
-
-  // @Column({
-  //   type: 'int',
-  //   nullable: true,
-  // })
-  // @IsOptional()
-  // @IsInt({ message: 'El objeto es una clave entera' })
-  // objeto_id: number;
-
-  // @ManyToOne((type) => Objeto, { eager: true })
-  // @JoinColumn({
-  //   name: 'objeto_id',
-  //   referencedColumnName: 'id_objeto',
-  // })
-  // objeto: Objeto;
-
-  // @Column({
-  //   type: 'int',
-  //   nullable: true,
-  // })
-  // @IsOptional()
-  // @IsInt({ message: 'El tipo de proceso es una clave entera' })
-  // tipo_proceso_id: number;
-
-  // @ManyToOne((type) => TipoProceso, { eager: true })
-  // @JoinColumn({
-  //   name: 'tipo_proceso_id',
-  //   referencedColumnName: 'id_tipo_proceso',
-  // })
-  // tipo: TipoProceso;
 
   // @Column({
   //   type: 'int',

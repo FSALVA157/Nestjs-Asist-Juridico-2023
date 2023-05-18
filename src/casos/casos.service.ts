@@ -40,6 +40,11 @@ export class CasosService {
       const resf = res[0].map((caso) => ({
         ...caso,
         jurisdiccion: caso.jurisdiccion.jurisdiccion,
+        distrito: caso.distrito.distrito,
+        fuero: caso.fuero.fuero,
+        caracter_letrado: caso.caracter_letrado.caracter_letrado,
+        tipo: caso.tipo.tipo_proceso,
+        objeto: caso.objeto.objeto,
       }));
       return resf;
     } catch (error) {
